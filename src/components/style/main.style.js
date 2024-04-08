@@ -1,4 +1,12 @@
-export const style = {
+export const mainStyle = {
+    Box: {
+        display: 'flex',
+        gap: "20px",
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'white',
+    },
     button: {
         backgroundColor: '#007bff',
         color: 'white',
@@ -12,4 +20,4 @@ export const style = {
             backgroundColor: 'darkblue',
         },
     }
-}
+};
