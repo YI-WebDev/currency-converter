@@ -1,11 +1,24 @@
 import axios from 'axios';
 
-const API_URL = "https://api.exchangeratesapi.io/v1";
-const access_key: string = "dc7ee138a8f78b75d52d153e1ff25cc2";
-
-export const getLatestRates = async (base: string, symbols: string) => {
+const url = process.env.REACT_APP_API_URL || "";
+const api_key = process.env.REACT_APP_API_KEY || "";
+const api_host = process.env.REACT_APP_API_HOST || "";
+console.log(url, api_key, api_host);
+export const getLatestRates = async (base: string, symbols: string, amount: number) => {
     try {
-        const response = await axios.get(`${API_URL}/latest?access_key=${access_key}&base=${base}&symbols=${symbols}`);
+        const response = await axios.get(url, {
+            params: {
+                format: "json",
+                from: base,
+                to: symbols,
+                amount: amount
+            },
+            headers: {
+                'X-RapidAPI-Key': api_key,
+                'X-RapidAPI-Host': api_host
+            }
+        });
+
         return response.data;
     } catch (error: any) {
         console.error("Failed to fetch data: ", error.message);

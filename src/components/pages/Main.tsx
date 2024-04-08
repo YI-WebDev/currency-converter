@@ -5,12 +5,13 @@ import { Button, TextField } from '@mui/material';
 const Main: React.FC = () => {
     const [base, setBase] = useState('USD');
     const [symbols, setSymbols] = useState('JPY');
+    const [amount, setAmount] = useState(0);
     const [rates, setRates] = useState<any>(null);
 
     const handleGetRates = async () => {
         try {
-            const data = await getLatestRates(base, symbols);
-            setRates(data.rates.JPY);
+            const data = await getLatestRates(base, symbols, amount);
+            setRates(data);
         } catch (error: any) {
             console.log(error);
             setRates("Error: " + error.message);
@@ -22,6 +23,7 @@ const Main: React.FC = () => {
             <h1>Exchange Rates</h1>
             <TextField label="Base" value={base} onChange={e => setBase(e.target.value)} />
             <TextField label="Symbols" value={symbols} onChange={e => setSymbols(e.target.value)} />
+            <TextField type="number" label="Amount" value={amount} onChange={e => setAmount(parseInt(e.target.value))} />
             <Button onClick={handleGetRates}>Get Latest Rates</Button>
             {rates && (
                 <div>
