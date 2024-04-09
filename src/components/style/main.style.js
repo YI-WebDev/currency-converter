@@ -10,7 +10,7 @@ export const mainStyle = {
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#1e1e1e',
-        paddingBottom: "150px",
+        paddingBottom: { xs: "50px", sm: "150px" },
         color: "white",
         fontSize: "20px",
     },
