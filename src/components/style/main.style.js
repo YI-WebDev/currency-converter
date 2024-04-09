@@ -1,3 +1,7 @@
+import { TextField } from '@mui/material';
+import { styled } from '@mui/material/styles';
+
+
 export const mainStyle = {
     Box: {
         display: 'flex',
@@ -5,7 +9,10 @@ export const mainStyle = {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'white',
+        backgroundColor: '#1e1e1e',
+        paddingBottom: "150px",
+        color: "white",
+        fontSize: "20px",
     },
     button: {
         backgroundColor: '#007bff',
@@ -19,5 +26,35 @@ export const mainStyle = {
         '&:hover': {
             backgroundColor: 'darkblue',
         },
-    }
+    },
 };
+
+export const StyledTextField = styled(TextField)`
+  .MuiOutlinedInput-root {
+    & fieldset {
+      border-color: white;
+    }
+    &:hover fieldset {
+      border-color: yellow;
+    }
+    &.Mui-focused fieldset {
+      border-color: yellow;
+    }
+    & .MuiOutlinedInput-input {
+        color: white;
+      }
+  }
+  .MuiFormLabel-root {
+    color: white;
+    &.Mui-focused {
+      color: white;
+    }
+  }
+
+  .MuiFormHelperText-root {
+    color: white;
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    justify-content: left;
+  }
+`;

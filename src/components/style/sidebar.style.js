@@ -11,10 +11,10 @@ export const style = {
     text: {
         textDecoration: 'none',
         fontSize: '20px',
-        color: 'inherit',
+        color: 'white',
         transition: '.3s',
         outline: '0.5px solid',
-        outlineColor: 'white',
+        outlineColor: '#1e1e1e',
         outlineOffset: '0px',
         ":hover": {
             animation: `${lightAnimation} .5s infinite alternate`,

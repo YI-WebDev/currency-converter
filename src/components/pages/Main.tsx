@@ -1,21 +1,26 @@
 import React, { useState } from "react";
 import { getLatestRates } from "../api/api";
-import { Box, Button, Drawer, TextField } from '@mui/material';
-import { mainStyle } from "../style/main.style";
+import { Box, Button, Drawer } from '@mui/material';
+import { mainStyle, StyledTextField } from "../style/main.style";
 import Header from "../pages/Header";
 import Sidebar from "./Sidebar";
 
 const Main: React.FC = () => {
-    const drawerWidth = 160;
+    const drawerWidth = 200;
     const [base, setBase] = useState('');
     const [symbols, setSymbols] = useState('');
     const [amount, setAmount] = useState(0);
     const [rates, setRates] = useState<any>(null);
+    const [error, setError] = useState("")
 
     const handleGetRates = async () => {
         try {
-            const data = await getLatestRates(base, symbols, amount);
-            setRates(data);
+            if (base && symbols !== "") {
+                const data = await getLatestRates(base, symbols, amount);
+                setRates(data);
+            } else {
+                setError("Please enter both base and symbols");
+            }
         } catch (error: any) {
             console.log(error);
             setRates("Error: " + error.message);
@@ -23,13 +28,14 @@ const Main: React.FC = () => {
     };
 
     return (
-        <div>
+        <>
             <Drawer
                 variant="permanent"
+                anchor="left"
                 sx={{
                     width: drawerWidth,
                     flexShrink: 0,
-                    [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
+                    '& .MuiDrawer-paper': { width: drawerWidth, boxSizing: 'border-box' },
                 }}
             >
                 <Sidebar />
@@ -37,9 +43,26 @@ const Main: React.FC = () => {
             <Header />
             <Box sx={mainStyle.Box}>
                 <h1>Exchange Rates</h1>
-                <TextField label="Base" value={base} onChange={e => setBase(e.target.value)} />
-                <TextField label="Symbols" value={symbols} onChange={e => setSymbols(e.target.value)} />
-                <TextField type="number" label="Amount" value={amount} onChange={e => setAmount(parseInt(e.target.value))} />
+                <StyledTextField
+                    helperText="example: USD, JPY, GBP..."
+                    required
+                    label="FROM"
+                    value={base}
+                    onChange={e => {
+                        setBase(e.target.value);
+                        setError("");
+                    }} />
+                <StyledTextField
+                    helperText="example: USD, JPY, GBP..."
+                    required label="TO"
+                    value={symbols}
+                    onChange={e => setSymbols(e.target.value)} />
+                <StyledTextField
+                    type="number"
+                    label="Amount"
+                    value={amount}
+                    onChange={e => setAmount(parseInt(e.target.value))} />
+                {error && <p style={{ color: 'red' }}>{error}</p>}
                 <Button sx={mainStyle.button} onClick={handleGetRates}>Get Latest Rates</Button>
                 {rates && (
                     <div>
@@ -48,7 +71,7 @@ const Main: React.FC = () => {
                     </div>
                 )}
             </Box>
-        </div>
+        </>
     )
 };
 
